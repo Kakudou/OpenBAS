@@ -1,0 +1,15 @@
+services:
+  collector-atomic_red_team:
+    image: openbas/collector-atomic-red-team:latest
+    env_file: "../envs/collector-atomic_red_team.env"
+    environment:
+      - OPENBAS_URL=${OPENBAS_INTERNAL_URL}
+      - OPENBAS_TOKEN=${OPENBAS_ADMIN_TOKEN}
+      - COLLECTOR_ID=${COLLECTOR_ATOMIC_RED_TEAM_ID}
+      - COLLECTOR_NAME=${COLLECTOR_ATOMIC_RED_TEAM_NAME}
+      - COLLECTOR_LOG_LEVEL=${COLLECTOR_ATOMIC_RED_TEAM_LOG_LEVEL}
+    restart: always
+    depends_on:
+      openbas:
+        condition: service_healthy
+

@@ -1,0 +1,25 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    env_file: "../envs/service-rabbitmq.env"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_NODENAME=${RABBITMQ_NODENAME}
+    volumes:
+      - amqpdata:/var/lib/rabbitmq
+    restart: always
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+volumes:
+  amqpdata:
+    driver: local
+    driver_opts:
+      type: none
+      device: ../openbas_persistent_volumes/amqpdata
+      o: bind
+

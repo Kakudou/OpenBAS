@@ -1,0 +1,43 @@
+services:
+  openbas:
+    image: openbas/platform:latest
+    env_file: "../envs/service-openbas.env"
+    environment:
+      - MINIO_ACCESS-KEY=${MINIO_ROOT_USER}
+      - MINIO_ACCESS-SECRET=${MINIO_ROOT_PASSWORD}
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - OPENBAS_ADMIN_EMAIL=${OPENBAS_ADMIN_EMAIL}
+      - OPENBAS_ADMIN_PASSWORD=${OPENBAS_ADMIN_PASSWORD}
+      - OPENBAS_ADMIN_TOKEN=${OPENBAS_ADMIN_TOKEN}
+      - OPENBAS_AUTH-LOCAL-ENABLE=${OPENBAS_AUTH_LOCAL_ENABLE}
+      - OPENBAS_BASE-URL=${OPENBAS_PUBLIC_URL}
+      - OPENBAS_RABBITMQ_HOSTNAME=${OPENBAS_RABBITMQ_HOSTNAME}
+      - OPENBAS_RABBITMQ_PASS=${RABBITMQ_DEFAULT_PASS}
+      - OPENBAS_RABBITMQ_USER=${RABBITMQ_DEFAULT_USER}
+      - SERVER_SSL_KEY-STORE-PASSWORD=${KEYSTORE_PASSWORD}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - SPRING_DATASOURCE_URL=${POSTGRES_URL}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - OPENBAS_XTM_OPENCTI_ENABLE=${OPENBAS_XTM_OPENCTI_ENABLE}
+      - OPENBAS_XTM_OPENCTI_URL=${OPENBAS_XTM_OPENCTI_URL}
+      - OPENBAS_XTM_OPENCTI_TOKEN=${OPENBAS_XTM_OPENCTI_TOKEN}
+      - SPRING_MAIL_HOST=${OPENBAS_SPRING_MAIL_HOST}
+      - SPRING_MAIL_PORT=${OPENBAS_SPRING_MAIL_PORT}
+      - SPRING_MAIL_USERNAME=${OPENBAS_SPRING_MAIL_USERNAME}
+      - SPRING_MAIL_PASSWORD=${OPENBAS_SPRING_MAIL_PASSWORD}
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      pgsql:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test:  ["CMD", "wget", "-qO-", "http://openbas:8080/"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+

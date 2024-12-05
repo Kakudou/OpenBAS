@@ -1,0 +1,15 @@
+services:
+  collector-mitre_attack:
+    image: openbas/collector-mitre-attack:latest
+    env_file: "../envs/collector-mitre_attack.env"
+    environment:
+      - OPENBAS_URL=${OPENBAS_INTERNAL_URL}
+      - OPENBAS_TOKEN=${OPENBAS_ADMIN_TOKEN}
+      - COLLECTOR_ID=${COLLECTOR_MITRE_ATTACK_ID}
+      - COLLECTOR_NAME=${COLLECTOR_MITRE_ATTACK_NAME}
+      - COLLECTOR_LOG_LEVEL=${COLLECTOR_MITRE_ATTACK_LOG_LEVEL}
+    restart: always
+    depends_on:
+      openbas:
+        condition: service_healthy
+
