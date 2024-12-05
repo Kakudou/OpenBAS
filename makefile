@@ -25,7 +25,7 @@ define generate_uuids
 	echo "Replacing UUID in $(1)...";
 	grep "# <generate_uuid>" $(1) | while read -r line; do \
 		key="$$(echo $$line | cut -d '=' -f 1)"; \
-		sed -i '' "s/$$line/$$key=$(UUID_GEN) # <generate_uuid>/g" $(1); \
+		sed -i'' "s/$$line/$$key=$(UUID_GEN) # <generate_uuid>/g" $(1); \
 	done;
 	echo "All UUID replaced in $(1).";
 endef
