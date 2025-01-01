@@ -45,6 +45,7 @@ openbas-up:
 	@> .env
 	@cat ./envs/*.env >> .env
 	@echo "Starting services..."
+	@docker-compose --project-name openbas $(SERVICES_FILES_FLAGS)  $(COLLECTORS_FILES_FLAGS) --env-file .env pull
 	@docker-compose --project-name openbas $(SERVICES_FILES_FLAGS)  $(COLLECTORS_FILES_FLAGS) --env-file .env up -d
 	@echo "OpenBAS should be running"
 
@@ -62,6 +63,6 @@ openbas-logs:
 openbas-docker-prune:
 	@make openbas-down
 	@echo "Hard deleting all databases..."
-	@rm -rf $(PERSISTENT_VOLUMES_DIR)/*
+	@rm -rf $(PERSISTENT_VOLUMES_DIR)/*/*
 	@echo "Cleaning Docker (prune af)..."
 	@docker system prune -af
