@@ -1,6 +1,6 @@
 services:
   openbas:
-    image: openbas/platform:latest
+    image: openbas/platform:rolling
     env_file: "../envs/service-openbas.env"
     environment:
       - MINIO_ACCESS-KEY=${MINIO_ROOT_USER}

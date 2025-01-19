@@ -1,6 +1,6 @@
 services:
   collector-mitre_attack:
-    image: openbas/collector-mitre-attack:latest
+    image: openbas/collector-mitre-attack:rolling
     env_file: "../envs/collector-mitre_attack.env"
     environment:
       - OPENBAS_URL=${OPENBAS_INTERNAL_URL}

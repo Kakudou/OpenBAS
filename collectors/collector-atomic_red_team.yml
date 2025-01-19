@@ -1,6 +1,6 @@
 services:
   collector-atomic_red_team:
-    image: openbas/collector-atomic-red-team:latest
+    image: openbas/collector-atomic-red-team:rolling
     env_file: "../envs/collector-atomic_red_team.env"
     environment:
       - OPENBAS_URL=${OPENBAS_INTERNAL_URL}
